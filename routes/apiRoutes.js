@@ -34,7 +34,7 @@ app.get('/api/notes/:id', (req, res) => {
 
 
   // POST request to add a note
-app.post('/api/notes', (req, res) => {
+app.post('/api/notes', function (req, res) {
     // Log that a POST request was received
     console.info(`${req.method} request received to add a note`);
   
@@ -43,26 +43,31 @@ app.post('/api/notes', (req, res) => {
     // Check if there is anything in the response body
     if (title && text) {
       const resNote = {
+        id: uuid(),
         title: req.body.title,
         text: req.body.text,
-        note_id: uuid(),
       };
-      fs.readFile('./db/db.json', 'utf8', function readFileCallback(err, resNote){
-        if (err){
-          console.log(err);
-        } else {
-          obj = JSON.parse(resNote);
-          notes.push(resNote)
-          noteString = JSON.stringify(resNote);
-          console.log(JSON.stringify(resNote));
-        
-      fs.writeFile('./db/db.json', noteString, (err) =>
+      // console.log(resNote);
+      notes.push(resNote);
+      const noteString = JSON.stringify(notes);
+      res.json(notes);
+      fs.writeFile('./db/db.json', 'utf8', noteString, (err) =>
       err
         ? console.error(err)
         : console.log(
             `Note for ${resNote.title} has been written to JSON file`
           )
     );
+      fs.readFile('./db/db.json', 'utf8', function readFileCallback(err, resNote){
+        if (err){
+          console.log(err);
+        } else {
+          console.log(resNote);
+          obj = JSON.parse(resNote);
+          // notes.push(resNote);
+          noteString = JSON.stringify(resNote);
+          console.log(JSON.stringify(resNote));
+        
 
     const response = {
       status: 'success',
