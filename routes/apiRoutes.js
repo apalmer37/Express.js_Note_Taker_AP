@@ -43,43 +43,46 @@ app.post('/api/notes', function (req, res) {
     // Check if there is anything in the response body
     if (title && text) {
       const resNote = {
-        id: uuid(),
         title: req.body.title,
         text: req.body.text,
+        id: uuid(),
       };
       // console.log(resNote);
       notes.push(resNote);
       const noteString = JSON.stringify(notes);
       res.json(notes);
-      fs.writeFile('./db/db.json', 'utf8', noteString, (err) =>
-      err
-        ? console.error(err)
-        : console.log(
+      fs.writeFile('./db/db.json', noteString, err => {
+      if (err){
+        console.log(err)
+       } else {
             `Note for ${resNote.title} has been written to JSON file`
-          )
-    );
-      fs.readFile('./db/db.json', 'utf8', function readFileCallback(err, resNote){
+    
+      };
+      fs.readFile('./db/db.json', 'utf8', function readFileCallback(err, data){
         if (err){
           console.log(err);
         } else {
-          console.log(resNote);
-          obj = JSON.parse(resNote);
+          // console.log(resNote);
+          // obj = JSON.parse(resNote);
           // notes.push(resNote);
-          noteString = JSON.stringify(resNote);
-          console.log(JSON.stringify(resNote));
-        
+          dataString = JSON.stringify(data);
+          console.log(JSON.stringify(data));
+          
 
     const response = {
       status: 'success',
       body: resNote,
     };
 
-    console.log(response);
-    res.json(response);
+    // console.log(response);
+    // res.json(response);
   }
 });
     //   res.json(`note for ${response.data.notes} has been added!`);
     // } else {
     //   res.json('Request body must at least contain a note name');
     // };
-}})};
+    })}})};
+
+
+    
