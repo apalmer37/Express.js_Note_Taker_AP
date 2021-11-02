@@ -4,7 +4,7 @@ const fs = require('fs');
 // Helper method for generating unique ids
 const uuid = require('./helpers/uuid');
 
-const PORT = 3005;
+
 
 const app = express();
 
@@ -16,6 +16,8 @@ app.use(express.static('public'));
 require('./routes/apiRoutes')(app);
 require('./routes/htmlRoutes')(app);
 
-app.listen(PORT, () =>
-  console.log(`App listening at http://localhost:${PORT} 🚀`)
-);
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 8000;
+}
+app.listen(port);
