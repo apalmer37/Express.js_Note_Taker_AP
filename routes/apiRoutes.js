@@ -62,9 +62,6 @@ app.post('/api/notes', function (req, res) {
         if (err){
           console.log(err);
         } else {
-          // console.log(resNote);
-          // obj = JSON.parse(resNote);
-          // notes.push(resNote);
           dataString = JSON.stringify(data);
           console.log(JSON.stringify(data));
           
@@ -74,14 +71,9 @@ app.post('/api/notes', function (req, res) {
       body: resNote,
     };
 
-    // console.log(response);
-    // res.json(response);
   }
 });
-    //   res.json(`note for ${response.data.notes} has been added!`);
-    // } else {
-    //   res.json('Request body must at least contain a note name');
-    // };
+
     })}})};
 
 
